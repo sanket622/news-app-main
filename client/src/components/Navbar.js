@@ -8,7 +8,7 @@ const Navbar = ({ userRole, setUserRole }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('https://news-app-backend-chi.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username: credentials.username, password: credentials.password })
@@ -30,7 +30,7 @@ const Navbar = ({ userRole, setUserRole }) => {
   const handleSignup = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/signup', {
+      const response = await fetch('https://news-app-backend-chi.vercel.app/api/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(credentials)

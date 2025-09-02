@@ -38,19 +38,24 @@ app.post('/api/signup', async (req, res) => {
   try {
     const { username, email, phone, password } = req.body;
     
+    if (!username || !email || !phone || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+    
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
       return res.status(400).json({ message: 'Username or email already exists' });
     }
 
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(String(password), 10);
     const user = new User({ username, email, phone, password: hashedPassword, role: 'user' });
     await user.save();
 
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: '24h' });
     res.json({ token, role: user.role, message: 'User created successfully' });
   } catch (error) {
-    res.status(500).json({ message: 'Server error' });
+    console.error('Signup error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
   }
 });
 

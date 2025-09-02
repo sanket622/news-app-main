@@ -9,16 +9,7 @@ const NewsList = () => {
 
   const fetchNews = async () => {
     try {
-      const response = await fetch(
-        // 'https://jsonplaceholder.typicode.com/posts'
-      );
-      
-      if (!response.ok) {
-        setArticles(getMockNews());
-        setLoading(false);
-        return;
-      }
-     
+      setArticles(getMockNews());
     } catch (error) {
       console.error('Error with request:', error);
       setArticles(getMockNews());
