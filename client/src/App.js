@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      fetch('https://news-app-backend-abtxg01lp-sanket-singhs-projects.vercel.app/api/verify', {
+      fetch('https://news-app-backend-tau.vercel.app/api/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token })
