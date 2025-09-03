@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 const Navbar = ({ userRole, setUserRole }) => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [credentials, setCredentials] = useState({ username: '', email: '', phone: '', password: '' });
 
   const handleLogin = async (e) => {
@@ -75,10 +76,30 @@ const Navbar = ({ userRole, setUserRole }) => {
             <span className="nav-link text-light me-3" style={{cursor: 'pointer'}}>Admin</span>
           )}
         </div>
-        <button className="navbar-toggler d-md-none" type="button">
+        <button className="navbar-toggler d-md-none" type="button" onClick={() => setShowMobileMenu(!showMobileMenu)}>
           <span className="navbar-toggler-icon"></span>
         </button>
       </div>
+      {showMobileMenu && (
+        <div className="d-md-none bg-dark">
+          <div className="navbar-nav p-3">
+            <span className="nav-link text-light" style={{cursor: 'pointer'}}>Home</span>
+            <span className="nav-link text-light" style={{cursor: 'pointer'}}>Bollywood News</span>
+            <span className="nav-link text-light" style={{cursor: 'pointer'}}>Politics</span>
+            {!userRole ? (
+              <>
+                <span className="nav-link text-light" style={{cursor: 'pointer'}} onClick={() => {setShowSignup(true); setShowMobileMenu(false);}}>Signup</span>
+                <span className="nav-link text-light" style={{cursor: 'pointer'}} onClick={() => {setShowLogin(true); setShowMobileMenu(false);}}>Login</span>
+              </>
+            ) : (
+              <span className="nav-link text-light" style={{cursor: 'pointer'}} onClick={handleLogout}>Logout</span>
+            )}
+            {userRole === 'admin' && (
+              <span className="nav-link text-light" style={{cursor: 'pointer'}}>Admin</span>
+            )}
+          </div>
+        </div>
+      )}
       {showLogin && (
         <div className="position-fixed top-50 start-50 translate-middle bg-white p-4 rounded shadow" style={{zIndex: 1050}}>
           <form onSubmit={handleLogin}>
